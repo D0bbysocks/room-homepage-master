@@ -4,6 +4,7 @@ const heroHeader = document.querySelector('.hero__header');
 const arrowButtonLeft = document.querySelector('#hero__arrow-button-left');
 const arrowButtonRight = document.querySelector('#hero__arrow-button-right');
 const navPrimaryMenu = document.querySelector('.nav__primary-menu');
+const backdrop = document.querySelector('.backdrop');
 
 let currentHeader = 1;
 const headerClasses = {
@@ -18,6 +19,7 @@ navButton.addEventListener('click', () => {
     navButton.ariaExpanded = !isExpanded;
     navMenu.dataset.visible = !isExpanded;
     navPrimaryMenu.hidden = isExpanded;
+    backdrop.hidden = isExpanded;
   });
 
 
@@ -96,6 +98,42 @@ function changeHeroHeader(direction) {
 }
 
 
+const textContainer = document.querySelector('.hero__text-container');
+
+function lockHeroTextHeight() {
+  
+  textContainer.style.height = 'auto';
+
+  const h1 = textCurrent.offsetHeight;
+  const h2 = textNext.offsetHeight;
+  const max = Math.max(h1, h2);
+
+  textContainer.style.height = `${max}px`;
+}
+
+
+const mqDesktop = window.matchMedia('(min-width: 1024px)');
+
+function syncNavForViewport() {
+  if (mqDesktop.matches) {
+    // Desktop: immer sichtbar
+    navPrimaryMenu.hidden = false;
+    navMenu.dataset.visible = true;
+
+    navButton.ariaExpanded = 'true'; // optional, damit State konsistent ist
+  } else {
+    // Mobile: Startzustand zu (oder wie du willst)
+    navPrimaryMenu.hidden = true;
+    navMenu.dataset.visible = false;
+    navButton.ariaExpanded = 'false';
+  }
+}
+
+mqDesktop.addEventListener('change', syncNavForViewport);
+window.addEventListener('load', syncNavForViewport);
+
+
+
 function renderSlideText(index, targetEl) {
   const tpl = document.querySelector(`#slide-${index}`);
   if (!tpl) return;
@@ -111,5 +149,15 @@ arrowButtonLeft.addEventListener('click', () => {
 arrowButtonRight.addEventListener('click', () => {
   changeHeroHeader('right');
 });
+
+window.addEventListener('load', lockHeroTextHeight);
+window.addEventListener('resize', lockHeroTextHeight);
+document.fonts?.ready?.then(lockHeroTextHeight);
+
+
+
+
+renderSlideText(1, textCurrent);
+lockHeroTextHeight();
 
 renderSlideText(1, textCurrent);

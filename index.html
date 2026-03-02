@@ -13,8 +13,10 @@
   <main>
     <section class="hero">
       <header class="hero__header">
-        <div class="hero__bg hero__bg--current hero__header-first" aria-hidden="true"></div>
-        <div class="hero__bg hero__bg--next" aria-hidden="true"></div>
+        <div class="hero__slider-container">
+          <div class="hero__bg hero__bg--current hero__header-first" aria-hidden="true"></div>
+          <div class="hero__bg hero__bg--next" aria-hidden="true"></div>
+        </div>
         
         <nav class="hero__nav-container">
           <button class="hero__nav-button" aria-label="Open navigation" aria-expanded="false" aria-controls="primary-navigation">
@@ -45,6 +47,7 @@
         <div class="nav__menu-container" id="primary-navigation" data-visible="false">
 
         </div>
+        <div class="backdrop" hidden></div>
         <div class="hero__arrow-container">
           <button class="hero__arrow-button" id="hero__arrow-button-left">
             <svg width="14" height="24" xmlns="http://www.w3.org/2000/svg"><path d="M13 0L1 12l12 12" stroke="#FFF" fill="none" fill-rule="evenodd"/></svg>
@@ -69,7 +72,7 @@
         <p class="hero__description tp-3-medium">Our modern furniture store provide a high level of quality. Our company has invested in advanced technology to ensure that every product is made as perfect and as consistent as possible. With three decades of experience in this industry, we understand what customers want for their home and office.</p>
       </template>
       <div class="hero__content-wrapper">
-        <div class="hero__text-container">
+        <div class="hero__text-container slide__text">
           <div class="hero__text hero__text--current"></div>
           <div class="hero__text hero__text--next" aria-hidden="true"></div>
         </div>
@@ -83,14 +86,42 @@
 
     <section class="aside">
       <div class="aside__wrapper">
-        <img src="./images/image-about-dark.jpg" alt="About dark" class="aside__image">
+        <picture>
+          <source 
+            srcset="./images/figma_cover2.jpg" 
+            media="(min-width: 600px)">
+          
+          <img 
+            src="./images/image-about-dark.jpg" 
+            alt="About dark"
+            class="aside__image aside__image--dark">
+        </picture>
         <div class="aside__content">
           <h2 class="aside__title tp-4-semiBold">About our furniture</h2>
           <p class="aside__description tp-3-medium">Our multifunctional collection blends design and function to suit your individual taste. Make each room unique, or pick a cohesive theme that best express your interests and what inspires you. Find the furniture pieces you need, from traditional to contemporary styles or anything in between. Product specialists are available to help you create your dream space.</p>
         </div>
-        <img src="./images/image-about-light.jpg" alt="About light" class="aside__image">
+        <picture>
+          <!-- Desktop (≥1024px) -->
+          <source 
+            srcset="./images/image-about-light.jpg"
+            media="(min-width: 1024px)">
+
+          <!-- Tablet (600px–1023px) -->
+          <source 
+            srcset="./images/figma_cover.jpg"
+            media="(min-width: 600px)">
+
+          <!-- Mobile (<600px) Fallback -->
+          <img 
+            src="./images/image-about-light.jpg"
+            alt="About light"
+            class="aside__image aside__image--light">
+        </picture>
       </div>
     </section>
   </main>
 </body>
 </html>
+
+
+

@@ -306,7 +306,7 @@ a {
     left: 0;
     width: 100%;
     height: 110px;
-    z-index: 100;
+    z-index: 999;
     background-color: var(--color-primary);
   }
   
@@ -423,14 +423,19 @@ a {
 /* test */
 .hero__header {
   position: relative;
+}
+
+.hero__slider-container {
+  position: absolute;
+  inset: 0;
   overflow: hidden;
+  z-index: 0;
 }
 
 /* Background layer */
 .hero__bg {
   position: absolute;
   inset: 0;
-  z-index: 0;
   background-size: cover;
   background-position: center;
   will-change: transform;
@@ -449,3 +454,172 @@ a {
   position: relative;
 }
 
+.hero__text-container {
+  overflow: hidden;
+  transition: height 0.2s ease;
+}
+
+
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 888;
+}
+
+
+   /* =========================================
+   Media Queries
+   ========================================= */
+
+   @media (min-width: 600px) {
+    .hero__content-wrapper,
+    .aside__content {
+      padding-inline: var(--space-64);
+    }
+
+    
+    .hero__title {
+      font-size: var(--tp-1-semiBold-size);
+      line-height: var(--tp-1-semiBold-line);
+      letter-spacing: var(--tp-1-semiBold-track);
+      font-weight: var(--tp-1-semiBold-weight);
+    }
+
+    .aside__image--dark {
+      max-height: 300px;
+      object-fit: cover;
+    }
+
+    .aside__image--light {
+      max-height: 243px;
+      object-fit: cover;
+    }
+
+    .hero__header-first {
+    background-image: url("./images/desktop-image-hero-1.jpg");
+  }
+
+  .hero__header-second {
+    background-image: url("./images/desktop-image-hero-2.jpg");
+  }
+
+  .hero__header-third {
+    background-image: url("./images/desktop-image-hero-3.jpg");
+  } 
+   }
+
+
+/* PC Media Query */
+@media (min-width: 1024px) {
+  /* --- PAGE LAYOUT --- */
+  main {
+    display: grid;
+    /* Divide the screen height roughly into 67% Hero and 33% Aside */
+    /* This guarantees we fill exactly the screen, maintaining aspect naturally */
+    grid-template-rows: 2fr 1fr;
+    min-height: 100vh;
+  }
+
+  /* --- UPPER SECTION (HERO) --- */
+  .hero {
+    display: grid;
+    /* Hero splits roughly into ~58% Image / ~42% Content */
+    grid-template-columns: 7fr 5fr;
+    align-items: stretch;
+    height: 100%; /* Take full height of the row */
+  }
+
+  .hero__header {
+    width: 100%;
+    height: 100%;
+    /* Remove aspect-ratio so it can stretch fully in the grid row */
+  }
+
+  .hero__header img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .hero__content-wrapper {
+    width: 100%;
+    height: 100%;
+    padding-inline: 4vw; /* Responsive padding */
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Center content vertically */
+  }
+
+  .button-container {
+    gap: var(--space-32);
+    justify-content: flex-start;
+  }
+
+  .hero__arrow-container {
+    transform: translateX(100%);
+  }
+
+
+  /* --- LOWER SECTION (ASIDE) --- */
+  .aside {
+    display: block;
+    width: 100%;
+    height: 100%; /* Take full height of the row */
+  }
+  
+  .aside__wrapper {
+    display: grid;
+    grid-template-columns: 3fr 4fr 3fr;
+    align-items: stretch;
+    width: 100%;
+    height: 100%;
+  }
+
+  .aside__content {
+    width: 100%;
+    max-width: none;
+    height: 100%;
+    padding-inline: 3vw;
+    /* Remove fixed padding-block, rely on flex centering */
+    padding-block: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .aside__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .aside__image--light {
+    max-height: none;
+  }
+  
+  .aside__image--dark {
+    max-height: none;
+  }
+
+  .hero__nav-button {
+    display: none;
+  }
+
+  .nav__menu-container[data-visible="true"] {
+    display: none;  
+  }
+
+  .nav__primary-menu {
+    color: var(--color-primary);
+  }
+
+  .hero__nav-container {
+    justify-content: flex-start;
+    gap: var(--space-56);
+  }
+}
