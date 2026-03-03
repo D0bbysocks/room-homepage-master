@@ -45,12 +45,27 @@ function changeHeroHeader(direction) {
 
   isAnimating = true;
 
-  // Remove transition temporarily to move elements to starting position
+  const isMobile = !mqDesktop.matches;
+
+  // OUTGOING: Where the current element goes to
+  const bgOut = direction === 'right' ? 'translateX(-100%)' : 'translateX(100%)';
+  // INCOMING: Where the next element comes from
+  const bgIn = direction === 'right' ? 'translateX(100%)' : 'translateX(-100%)';
+
+  const textOut = isMobile 
+    ? (direction === 'right' ? 'translateX(100%)' : 'translateX(-100%)') // Opposite of BG on mobile
+    : bgOut; // Same as BG on desktop
+
+  const textIn = isMobile
+    ? (direction === 'right' ? 'translateX(-100%)' : 'translateX(100%)') // Opposite of BG on mobile
+    : bgIn; // Same as BG on desktop
+
+  // Remove transition temporarily to move next elements to STARTING position
   bgNext.style.transition = 'none';
-  bgNext.style.transform = direction === 'right' ? 'translateX(100%)' : 'translateX(-100%)';
+  bgNext.style.transform = bgIn;
 
   textNext.style.transition = 'none';
-  textNext.style.transform = direction === 'right' ? 'translateX(-100%)' : 'translateX(100%)';
+  textNext.style.transform = textIn;
 
   // Set the correct image class for next
   bgNext.className = `hero__bg hero__bg--next ${headerClasses[nextHeader]}`;
@@ -65,11 +80,13 @@ function changeHeroHeader(direction) {
   textCurrent.style.transition = 'transform 0.5s ease-in-out';
   textNext.style.transition = 'transform 0.5s ease-in-out';
 
-  // Move both to their new positions (text goes opposite)
-  bgCurrent.style.transform = direction === 'right' ? 'translateX(-100%)' : 'translateX(100%)';
+  // GO TO TARGET POSITIONS
+  // BG
+  bgCurrent.style.transform = bgOut;
   bgNext.style.transform = 'translateX(0)';
 
-  textCurrent.style.transform = direction === 'right' ? 'translateX(100%)' : 'translateX(-100%)';
+  // TEXT
+  textCurrent.style.transform = textOut;
   textNext.style.transform = 'translateX(0)';
 
   // Clean up after transition
@@ -84,7 +101,7 @@ function changeHeroHeader(direction) {
     bgCurrent.className = `hero__bg hero__bg--current ${headerClasses[nextHeader]}`;
     bgCurrent.style.transform = 'translateX(0)';
     
-    // Reset next to default hidden position
+    // Reset next to default hidden position (could be either side, we just push it out of view)
     bgNext.className = 'hero__bg hero__bg--next';
     bgNext.style.transform = 'translateX(100%)';
 
